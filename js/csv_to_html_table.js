@@ -11,15 +11,16 @@ CsvToHtmlTable = {
       var datatables_options = options.datatables_options || {};
       var custom_formatting = options.custom_formatting || [];
 
-      $("#" + el).html("<table class='table table-striped table-condensed' id='" + el + "-table'></table>");
+      $("#" + el).html("<table class='table table-responsive table-striped table-condensed' id='" + el + "-table'></table>");
 
       $.when($.get(csv_path)).then(
-        function(data){      
-          var csv_data = $.csv.toArrays(data, csv_options);
-          
+        function(data){
+          //var csv_data = $.csv.toArrays(data, csv_options);
+          var csv_data = csv_path;
+
           var table_head = "<thead><tr>";
 
-          for (head_id = 0; head_id < csv_data[0].length; head_id++) { 
+          for (head_id = 0; head_id < csv_data[0].length; head_id++) {
             table_head += "<th>" + csv_data[0][head_id] + "</th>";
           }
 
@@ -39,7 +40,7 @@ CsvToHtmlTable = {
               })
             }
 
-            for (col_id = 0; col_id < csv_data[row_id].length; col_id++) { 
+            for (col_id = 0; col_id < csv_data[row_id].length; col_id++) {
               row_html += "<td>" + csv_data[row_id][col_id] + "</td>";
             }
               
@@ -49,8 +50,10 @@ CsvToHtmlTable = {
 
           $('#' + el + '-table').DataTable(datatables_options);
 
+          /*
           if (allow_download)
             $("#" + el).append("<p><a class='btn btn-info' href='" + csv_path + "'><i class='glyphicon glyphicon-download'></i> Download as CSV</a></p>");
+           */
         });
     }
 }
